@@ -1,13 +1,14 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Automation Suite">
-    <parameter name="browser" value="chrome"/>
-    <test name="Login Test">
+    <!--configuración cross-browser-->
+    <test name="Login Test - Chrome">
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="org.portfolio.tests.LoginTest"/>
         </classes>
     </test>
-    <parameter name="browser" value="firefox"/>
-    <test name="Login Test">
+    <test name="Login Test - Firefox">
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="org.portfolio.tests.LoginTest"/>
         </classes>
