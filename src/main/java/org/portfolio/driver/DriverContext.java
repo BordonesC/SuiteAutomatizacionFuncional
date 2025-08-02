@@ -1,8 +1,10 @@
-package org.portfolio.utils;
+package org.portfolio.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.config.OperatingSystem;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverContext {
@@ -13,10 +15,15 @@ public class DriverContext {
             switch(browser.toLowerCase()){
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments("--headless");
+                    driver = new ChromeDriver(chromeOptions);
                     break;
                 case "firefox":
-                    WebDriverManager.firefoxdriver().setup();
+                    WebDriverManager.firefoxdriver()
+                            .driverVersion("0.34.0")
+                            .operatingSystem(OperatingSystem.WIN)
+                            .setup();
                     driver = new FirefoxDriver();
                     break;
                 default:
