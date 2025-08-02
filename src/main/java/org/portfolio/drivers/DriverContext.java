@@ -1,4 +1,4 @@
-package org.portfolio.driver;
+package org.portfolio.drivers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.OperatingSystem;
