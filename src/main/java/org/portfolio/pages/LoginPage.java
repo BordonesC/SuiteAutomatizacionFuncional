@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.portfolio.models.RegisterData;
 import org.portfolio.util.Utils;
 
 public class LoginPage extends Utils {
@@ -45,10 +46,10 @@ public class LoginPage extends Utils {
         buttonLogin.click();
     }
 
-    public void signup(String name, String email){
+    public void signup(RegisterData registerData){
         linkSignupLogin.click();
-        inputNameSignUp.sendKeys(name);
-        inputEmailSignUp.sendKeys(email);
+        inputNameSignUp.sendKeys(registerData.getName());
+        inputEmailSignUp.sendKeys(registerData.getEmail());
         buttonSignUp.click();
     }
 }
