@@ -1,9 +1,15 @@
 package org.portfolio.tests;
 
-import org.openqa.selenium.*;
-import org.portfolio.pages.LoginPage;
+import org.portfolio.util.PdfReport;
 import org.portfolio.util.Utils;
+import org.portfolio.util.DataProviders;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
+import org.portfolio.pages.LoginPage;
+import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.lang.reflect.Method;
 
 public class LoginTest extends BaseTest{
     private Utils utils;
@@ -11,20 +17,30 @@ public class LoginTest extends BaseTest{
 
     @BeforeMethod
     @Parameters("browser")
-    public void setUpTest(String browser) {
-        //llama al setUp desde BaseTest e inicializa basePage con el driver
-        super.setUp(browser);
+    public void setUpTest(String browser, Method method) {
+        //llama al setUp desde Utils e inicializa utils con el driver
+        super.setUp(browser, method);
         utils = new Utils(driver);
         loginPage = new LoginPage(driver);
     }
 
+    @Test(dataProvider = "loginData", dataProviderClass = DataProviders.class)
+    //test para validar login con DataProvider y expectedResult
+    public void login(String email, String password, String expectedResult, String testType){
+        loginPage.login(email,password);
 
-    @Test
-    //test para login con credenciales inválidas
-    public void loginInvalidCredentials(){
-        loginPage.login("user@novalido.com","123456");
-        WebElement errorMessage = utils.waitUntilVisible(By.xpath("//p[contains(text(),'Your email or password is incorrect!')]"),5);
+        if (testType.equalsIgnoreCase("validLogin")){
+            WebElement loggedInText = driver.findElement(By.xpath("//a[contains(text(),'Logged in as')]"));
+            utils.waitUntilElementIsVisible(loggedInText,5);
+            Assert.assertTrue(loggedInText.getText().contains(expectedResult));
+            PdfReport.addStep("Valid Login", PdfReport.EstadoPrueba.PASSED, true);
 
-        assert errorMessage.getText().contains("Your email or password is incorrect!");
+        } else if (testType.equalsIgnoreCase("invalidLogin")) {
+            WebElement errorMessage = driver.findElement(By.xpath("//p[contains(text(),'Your email or password is incorrect!')]"));
+            utils.waitUntilElementIsVisible(errorMessage,5);
+            PdfReport.addStep("No valid Login", PdfReport.EstadoPrueba.FAILED, true);
+            Assert.assertEquals(errorMessage.getText(),expectedResult);
+        }
     }
+
 }
