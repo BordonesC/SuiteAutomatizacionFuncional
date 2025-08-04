@@ -13,4 +13,11 @@
             <class name="org.portfolio.tests.LoginTest"/>
         </classes>
     </test>
+
+    <test name="SignUp Test - Firefox">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="org.portfolio.tests.RegisterTest"/>
+        </classes>
+    </test>
 </suite>

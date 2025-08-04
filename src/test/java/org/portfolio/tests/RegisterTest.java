@@ -68,7 +68,7 @@ public class RegisterTest extends BaseTest{
             } else if ("invalidSignUp".equalsIgnoreCase(testType)) {
                 WebElement errorMessage = driver.findElement(By.xpath("//p[contains(text(),'Email Address already exist!')]"));
                 utils.waitUntilElementIsVisible(errorMessage, 5);
-                PdfReport.addStep("Valid SignUp", PdfReport.EstadoPrueba.FAILED,true);
+                PdfReport.addStep("No valid SignUp", PdfReport.EstadoPrueba.FAILED,true);
                 Assert.assertEquals(errorMessage.getText(), expectedResult);
             }
         } catch (Exception e) {

@@ -22,6 +22,7 @@ public class BaseTest {
     @BeforeMethod
     @Parameters("browser")
     public void setUp(String browser, Method method){
+        logger.info("Iniciando el test: " + method.getName());
         driver = DriverContext.getDriver(browser);
         driver.manage().window().maximize();
         driver.get("https://automationexercise.com");
@@ -49,6 +50,7 @@ public class BaseTest {
         }
 
         PdfReport.generarPDF(fileName);
+        PdfReport.clearReport();
         DriverContext.quitDriver();
     }
 }

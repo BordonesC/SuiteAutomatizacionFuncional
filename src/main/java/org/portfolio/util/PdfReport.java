@@ -73,16 +73,17 @@ public class PdfReport {
             document.add(new Paragraph("Reporte de ejecución")
                     .setBold().setFontSize(18).setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("Fecha: " +
-                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()))
+                    new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()))
                     .setTextAlignment(TextAlignment.CENTER));
             document.add(new Paragraph("\n"));
 
             for (PasoReporte paso : pasos) {
-                String textoPaso = "- " + paso.descripcion + " [" + paso.estado + "]";
+                String textoPaso = "- Validación:" + paso.descripcion + " [" + paso.estado + "]";
                 Paragraph p = new Paragraph(textoPaso)
                         .setFontSize(12)
                         .setFontColor(paso.estado == EstadoPrueba.PASSED ?
-                                ColorConstants.GREEN : ColorConstants.RED);
+                                ColorConstants.GREEN : ColorConstants.RED)
+                        .setBold();
                 document.add(p);
 
                 if (paso.capturar && paso.imagenBytes != null) {

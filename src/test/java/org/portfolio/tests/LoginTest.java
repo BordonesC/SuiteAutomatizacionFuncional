@@ -1,5 +1,6 @@
 package org.portfolio.tests;
 
+import org.portfolio.util.PdfReport;
 import org.portfolio.util.Utils;
 import org.portfolio.util.DataProviders;
 import org.openqa.selenium.WebElement;
@@ -32,9 +33,12 @@ public class LoginTest extends BaseTest{
             WebElement loggedInText = driver.findElement(By.xpath("//a[contains(text(),'Logged in as')]"));
             utils.waitUntilElementIsVisible(loggedInText,5);
             Assert.assertTrue(loggedInText.getText().contains(expectedResult));
+            PdfReport.addStep("Valid Login", PdfReport.EstadoPrueba.PASSED, true);
+
         } else if (testType.equalsIgnoreCase("invalidLogin")) {
             WebElement errorMessage = driver.findElement(By.xpath("//p[contains(text(),'Your email or password is incorrect!')]"));
             utils.waitUntilElementIsVisible(errorMessage,5);
+            PdfReport.addStep("No valid Login", PdfReport.EstadoPrueba.FAILED, true);
             Assert.assertEquals(errorMessage.getText(),expectedResult);
         }
     }
