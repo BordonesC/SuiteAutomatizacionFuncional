@@ -40,3 +40,6 @@ build/
 ### archivos ###
 .xlsx
 .pdf
+/logs/
+/.idea/
+/target/
